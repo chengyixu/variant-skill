@@ -648,12 +648,66 @@ canvas { cursor: crosshair; touch-action: none; }
 
 ---
 
-### Style 10: Editorial / Product
+### Style 10: Sci-Fi / Voice Recorder
+**Source:** Voice Recorder Widget
+**Font:** `"JetBrains Mono"` monospace
+**Palette:** Dark (#151619) + red recording accent
+```css
+body { background-color: #151619; font-family: 'JetBrains Mono', monospace; }
+
+/* Radial tick visualizer — 120 ticks in a circle */
+/* Ticks displaced by sine/cosine noise while recording */
+/* Color tokens: */
+/* --bg: #151619 */
+/* --text: #8E9299 (steel gray) */
+/* --record: #FF4444 (red) */
+/* --record-ring: pulse animation, scale + opacity */
+
+/* Status text: "Secure link established", reference codes */
+/* Timer: 11px mono, spacing 1px */
+/* Sample rate label: "44.1 kHz" */
+
+/* Record button with state morph: */
+/* cubic-bezier(0.2, 0.8, 0.2, 1) for record state transitions */
+```
+
+---
+
+### Style 11: Infinite Gallery
+**Source:** Infinite Gallery Widget
+**Font:** `Inter` / `InterVariable`
+**Palette:** Dark (#1c1c1c) with full-opacity active card
+```css
+.gallery-container {
+  width: 25.125rem; height: 54.625rem;
+  background-color: #1c1c1c;
+  border-radius: 8px;
+  touch-action: none;
+}
+.gallery-card {
+  width: 15.625rem; height: 15.625rem;
+  border-radius: 2.5rem;   /* 40px — very round! */
+  transition: opacity 0.3s ease-out;
+}
+/* Active card: opacity 1, inactive: 0.15 */
+
+/* Quincunx grid: 3 cols × 5 rows, 8px gap */
+/* Odd rows offset by half card width (129px) */
+
+/* Handle pill: bg #262626, border-radius 999px */
+/* Momentum drag: velocity tracking, 0.95 friction decay */
+/* Magnetic snap: soft pull when velocity < 3 */
+/* Snap animation: 300ms cubic ease-out */
+```
+
+---
+
+### Style 12: Editorial / Product
 **Source:** Movie Rating, Video Player
 ```css
 /* High-quality product photography with warm lighting */
 /* Minimal text overlay on rich imagery */
-/* Rating systems, review interfaces */
+/* Rating systems with GSAP + Peel library animations */
 /* Attribution tags ("@vuelo") */
 ```
 
