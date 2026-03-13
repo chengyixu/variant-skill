@@ -21,9 +21,10 @@ Build production-grade websites that capture variant.com's distinctive design la
 ```css
 :root {
   /* Backgrounds — warm darks, never pure black */
-  --bg-body: #222222;           /* rgb(34, 34, 34) — main background */
-  --bg-surface: #1e1e1c;       /* rgb(30, 30, 28) — cards, panels */
-  --bg-deep: #070706;          /* rgb(7, 7, 6) — buttons, elevated surfaces */
+  --bg-body: #222222;           /* rgb(34, 34, 34) — outer body background */
+  --bg-page: #070706;          /* rgb(7, 7, 6) — main page/panel background */
+  --bg-surface: #1e1e1c;       /* rgb(30, 30, 28) — input bar, elevated panels */
+  --bg-deep: #070706;          /* rgb(7, 7, 6) — buttons, cards with content */
 
   /* Text — warm off-whites, never pure white */
   --text-primary: #f0ede5;          /* rgb(240, 237, 229) — headings, bold text */
@@ -35,10 +36,11 @@ Build production-grade websites that capture variant.com's distinctive design la
   --border-subtle: rgba(255, 255, 255, 0.1);    /* 0.5px borders on buttons/cards */
   --border-card-outline: rgba(255, 255, 255, 0.08); /* dashed placeholder cards */
 
-  /* Accents — use sparingly, only in widget interiors */
-  --accent-blue: #4a9eff;
-  --accent-pink: #ff6b9d;
-  --accent-green: #4aff8a;
+  /* Accents — from CSS variables, use sparingly in widget interiors */
+  --accent-blue: #2688f9;       /* --color-primary-blue */
+  --accent-blue-alt: #3a86ff;   /* --color-secondary-blue */
+  --accent-coral: rgb(248, 113, 113); /* --color-accent-coral */
+  --accent-purple: rgba(107, 173, 255, 1); /* --color-accent-purple */
 }
 ```
 
@@ -113,8 +115,8 @@ p {
 
 - **Two-column CSS Grid**: `grid-template-columns: 408px 1fr` (responsive: stack on mobile)
 - **Full viewport height**: `height: 100vh`
-- **Widget grid**: Masonry-style mixed card sizes with 6px gap
-- **Floating input**: Fixed position, bottom-left, with glassmorphism
+- **Widget grid**: Masonry-style mixed card sizes with 10px gap, absolutely positioned via CSS transforms (virtual scrolling)
+- **Floating input**: Pinned to bottom of left panel (not viewport-fixed), with `rgb(30, 30, 28)` background and `box-shadow: rgba(255,255,255,0.1) 0 0 0 0.5px` ring
 
 ### Card Sizes (Widget Grid)
 
@@ -127,8 +129,26 @@ Narrow:  177 x 384px  (border-radius: 8px)
 Feature: 345 x 259px  (border-radius: 8px)
 ```
 
-Empty/placeholder cards: dashed 0.5px border, no fill.
-Active cards: contain interactive iframes or rich content.
+Empty/placeholder cards use a **shimmer dashed border** effect:
+```css
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  /* Shimmer gradient that sweeps across the border */
+  background-image: linear-gradient(135deg,
+    rgba(255,255,255,0.22) 48%,
+    rgba(255,255,255,0.55) 50%,
+    rgba(255,255,255,0.22) 52%);
+  background-size: 6700px 6700px;
+  /* Masked to a dashed rounded-rectangle via SVG */
+  -webkit-mask-image: url("data:image/svg+xml,...");
+  /* SVG uses: stroke-dasharray='2 3' stroke-linecap='round' stroke-width='1' rx='8' ry='8' */
+}
+```
+Active cards: contain interactive iframes or rich content, solid subtle border.
 
 ### UI Components
 
@@ -198,22 +218,33 @@ Active cards: contain interactive iframes or rich content.
 
 ### Interactive Widgets
 
-Variant showcases interactive widget demos inside cards. Typical widget types:
-- **Weather widget**: Photo background + temperature overlay + rain drops animation
-- **Music player**: Album art + playback controls + waveform
-- **Battery/status**: Gauge display + stats + action button
-- **Radio tuner**: Frequency dial + AM/FM toggle + waveform canvas
-- **CRT display**: Retro monitor with text content + scanlines
+Variant showcases 15+ interactive widget demos inside cards. Each is self-contained (iframe with `sandbox="allow-scripts allow-same-origin"`, lazy-loaded). Examples:
 
-Each widget is self-contained (iframe or shadow DOM) with its own internal styling.
+- **Poetic Weather**: Photo background (Golden Gate Bridge) + temperature overlay + animated rain drops + city label
+- **Music Player**: Circular album art with glow + track info + playback controls + genre/BPM tag
+- **Bike Battery**: Vertical bar gauge + percentage + miles left + charge stats + action button
+- **Radio Tuner**: Frequency dial (83.5–105.9) + AM/FM toggle + Canvas waveform
+- **CRT Display**: Retro scanline monitor with "Loading DOOM..." text, Canvas-based
+- **Scribble Pad**: Drawing canvas with colorful strokes + clear button + tool toggles
+- **Stickers**: Collection of retro/funky sticker designs with typography badges
+- **Card Widget**: Credit/debit card with flip, freeze, add cash actions
+- **Robot Widget**: Animated LED-style robot face with emoji reaction buttons
+- **Messaging**: Notification list with tabs and message previews
+- **Text Editor**: Rich text with B/I/U/List toolbar
+- **Video Player**: Media playback widget
+- **Voice Recorder**: Audio recording interface
+
+Widget states: shimmer placeholder (loading) → loaded → hidden (offscreen, recycled).
 
 ### Animation & Interaction Principles
 
-1. **Scroll-driven**: Content reveals on scroll, widgets animate as they enter viewport
-2. **Micro-interactions**: Subtle hover states on buttons (opacity change, not color change)
-3. **Canvas animations**: Use HTML5 Canvas for waveforms, gauges, particle effects
-4. **No jarring transitions**: Everything eases smoothly (300-500ms, ease-out)
-5. **Ambient motion**: Subtle continuous animations in widgets (rain, waveforms) add life
+1. **Infinite virtual scroll**: Right panel uses transform-based positioning with ~60,000px scroll height; tiles are recycled as user scrolls (not traditional DOM flow)
+2. **Shimmer borders**: Card outlines use a 135deg gradient (`rgba(255,255,255,0.22)` → `0.55` → `0.22`) masked to a dashed SVG rect, creating a slow-moving light sweep effect
+3. **Micro-interactions**: Subtle hover states on buttons (opacity change, not color change)
+4. **Canvas animations**: Use HTML5 Canvas for CRT effects, radio waveforms, particle systems
+5. **No jarring transitions**: Everything eases smoothly (300-500ms, ease-out)
+6. **Ambient motion**: Continuous animations in widgets (rain drops, waveforms, gauges) add life without distraction
+7. **Sound design**: Interaction sounds for generate, explore, and error states (`.wav` files preloaded)
 
 ### Responsive Behavior
 
