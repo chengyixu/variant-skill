@@ -1,284 +1,667 @@
 ---
 name: variant-website
-description: Build websites in the visual style of variant.com — ultra-dark, warm minimal, interactive widget showcases with refined typography and subtle borders. Use when the user wants a dark landing page, AI tool homepage, infinite scroll showcase, or any site inspired by variant.com's design language.
+description: "Complete multi-aesthetic design system extracted from variant.com via Jina r.reader + chrome-devtools. Contains 80+ shell CSS variables, 10+ distinct widget aesthetics with FULL source CSS (dark minimal, retro CRT, atmospheric photo, vibrant playful, iOS light, audio/music, retro radio, fintech card, robot mascot, scribble art), shimmer dashed borders, WebGL shaders, squircle clip-paths, virtual scroll patterns, glassmorphism, rain/particle animations, and production-ready component architecture. Use when building any dark-mode UI, landing page, widget showcase, AI tool interface, or when the user needs a specific design aesthetic."
 ---
 
-# Variant Website Design System
+# Variant.com — Complete Multi-Aesthetic Design System
 
-Build production-grade websites that capture variant.com's distinctive design language: a warm-dark, ultra-refined aesthetic with interactive widget showcases, subtle borders, and clean typography.
+Variant.com is not one design — it's a **design platform** showcasing 10+ distinct visual aesthetics across 15+ interactive widgets, unified by a dark-mode shell with warm tones, ultra-subtle borders, and shimmer effects.
+
+This skill gives you the FULL design system: every CSS variable, every animation, every gradient, every component pattern extracted directly from the live source code via Jina r.reader API.
 
 ## When to Use
 
-- User asks to build a website "like variant.com" or references the Variant design style
-- Dark-mode landing pages for AI tools, creative tools, or SaaS products
-- Showcase/portfolio pages with interactive widget grids
-- Any request for a warm-dark minimal aesthetic with high production polish
+- Building any dark-mode UI, landing page, or product showcase
+- AI tool interfaces, creative tool UIs, design tool dashboards
+- Widget/card grids with interactive content
+- Any of the 10+ specific aesthetics below (retro, glassmorphic, atmospheric, etc.)
+- Floating input bars, shimmer effects, virtual scroll grids
+- When user says "like variant.com" or wants a warm-dark refined aesthetic
 
-## Design System
+---
 
-### Color Palette
+## Part 1: The Shell Design System (variant.com itself)
+
+### Complete CSS Custom Properties (80+)
 
 ```css
 :root {
-  /* Backgrounds — warm darks, never pure black */
-  --bg-body: #222222;           /* rgb(34, 34, 34) — outer body background */
-  --bg-page: #070706;          /* rgb(7, 7, 6) — main page/panel background */
-  --bg-surface: #1e1e1c;       /* rgb(30, 30, 28) — input bar, elevated panels */
-  --bg-deep: #070706;          /* rgb(7, 7, 6) — buttons, cards with content */
+  /* ═══════ BACKGROUNDS ═══════ */
+  --bg-body: #222222;            /* outer body */
+  --bg-page: #070706;            /* main panels */
+  --bg-surface: #1e1e1c;        /* input bar, elevated panels */
+  --bg-deep: #070706;           /* buttons, cards */
+  --color-gray-medium: #363636;  /* medium surface */
 
-  /* Text — warm off-whites, never pure white */
-  --text-primary: #f0ede5;          /* rgb(240, 237, 229) — headings, bold text */
-  --text-secondary: rgba(240, 237, 229, 0.65);  /* body copy */
-  --text-tertiary: rgba(240, 237, 229, 0.5);    /* captions, hints */
-  --text-input: rgba(255, 255, 255, 0.85);       /* input fields */
+  /* ═══════ TEXT — warm off-whites, NEVER pure white ═══════ */
+  --text-primary: #f0ede5;                     /* rgb(240, 237, 229) */
+  --text-90: rgba(255, 255, 255, 0.9);
+  --text-85: rgba(255, 255, 255, 0.85);       /* input text */
+  --text-80: rgba(255, 255, 255, 0.8);
+  --text-70: rgba(255, 255, 255, 0.7);
+  --text-50: rgba(255, 255, 255, 0.5);        /* muted labels */
+  --text-40: rgba(255, 255, 255, 0.4);        /* placeholder */
+  --text-30: rgba(255, 255, 255, 0.3);
+  --text-20: rgba(255, 255, 255, 0.2);
+  --text-15: rgba(255, 255, 255, 0.15);
+  --text-10: rgba(255, 255, 255, 0.1);        /* borders */
+  --text-08: rgba(255, 255, 255, 0.08);
+  --text-07: rgba(255, 255, 255, 0.07);       /* hover bg */
+  --text-06: rgba(255, 255, 255, 0.06);
+  --text-05: rgba(255, 255, 255, 0.05);
+  --text-04: rgba(255, 255, 255, 0.04);
+  --text-03: rgba(255, 255, 255, 0.03);
 
-  /* Borders — ultra-subtle */
-  --border-subtle: rgba(255, 255, 255, 0.1);    /* 0.5px borders on buttons/cards */
-  --border-card-outline: rgba(255, 255, 255, 0.08); /* dashed placeholder cards */
+  /* ═══════ BRAND BLUES ═══════ */
+  --color-primary-blue: #2688f9;
+  --color-secondary-blue: #3a86ff;
+  --color-tertiary-blue: #3291ff;
+  --color-accent-blue: rgb(59, 130, 246);
+  --color-brand-blue: rgb(37, 99, 235);
 
-  /* Accents — from CSS variables, use sparingly in widget interiors */
-  --accent-blue: #2688f9;       /* --color-primary-blue */
-  --accent-blue-alt: #3a86ff;   /* --color-secondary-blue */
-  --accent-coral: rgb(248, 113, 113); /* --color-accent-coral */
-  --accent-purple: rgba(107, 173, 255, 1); /* --color-accent-purple */
+  /* ═══════ ACCENT COLORS ═══════ */
+  --color-accent-coral: rgb(248, 113, 113);
+  --color-accent-purple: rgba(107, 173, 255, 1);
+  --color-warning-red: #f55c47;
+
+  /* ═══════ SEMI-TRANSPARENT GRAYS ═══════ */
+  --gray-medium-75: rgba(61, 61, 61, 0.75);    /* modal bg */
+  --gray-charcoal-85: rgba(22, 22, 22, 0.85);  /* dropdown bg */
+  --gray-darker-85: #0e0e0ed9;                 /* menu bg */
+  --dropdown-bg: rgba(68, 68, 68, 0.65);       /* dropdown/popover */
 }
 ```
 
-**Critical rules:**
-- NEVER use pure `#000000` or `#ffffff` — always use the warm variants above
-- Background colors should feel like "charcoal" not "black"
-- Text should feel like "warm cream" not "white"
-- Borders at 0.5px width with very low opacity — barely visible
+### Typography System
 
-### Typography
+**Font Stack (3 tiers):**
+1. `"Variant Neue Display"` — brand display (100–900 weight + italic, Neue Haas Grotesk based)
+2. `"Variant Neue Text"` — brand body (400, 500, 700 + italic)
+3. `Inter` — system fallback (variable 100–900)
 
 ```css
-/* Primary: system sans-serif stack inspired by Variant's custom fonts */
---font-display: 'Inter', system-ui, -apple-system, sans-serif;
---font-body: 'Inter', system-ui, -apple-system, sans-serif;
+/* Headline: LIGHT weight, never bold */
+h1 { font-size: 32px; font-weight: 400; line-height: 36px; letter-spacing: 0.32px; }
+h1 em { font-style: italic; }
 
-/* Headline */
-h1 {
-  font-size: 32px;
-  font-weight: 400;        /* Light weight — NOT bold */
-  line-height: 36px;
-  letter-spacing: 0.32px;
-  color: var(--text-primary);
+/* Body */
+p { font-size: 14px; line-height: 24px; letter-spacing: 0.28px; color: rgba(240, 237, 229, 0.65); }
+
+/* UI Labels */
+.label { font-size: 13px; font-weight: 500; }
+.btn { font-size: 11px; font-weight: 400; letter-spacing: 0.22px; }
+.small { font-size: 11.5px; letter-spacing: 0.12px; }
+
+/* Monospace (code/data) */
+.mono { font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace; }
+```
+
+### Layout Architecture
+
+```
+┌─────────────────────────────────────────────────┐
+│ Sidebar (52px fixed left, icons only)           │
+│ ┌─────────────────────────────────────────────┐ │
+│ │ Topbar (52px sticky top, editable title)    │ │
+│ │ ┌─────────────────────────────────────────┐ │ │
+│ │ │                                         │ │ │
+│ │ │  SquishyGrid (virtual scroll,           │ │ │
+│ │ │  transform-positioned cards,            │ │ │
+│ │ │  ~60,000px scroll height)               │ │ │
+│ │ │                                         │ │ │
+│ │ └─────────────────────────────────────────┘ │ │
+│ └─────────────────────────────────────────────┘ │
+│ ┌─────────────────────────────────────────────┐ │
+│ │ GlobalComposer (fixed bottom, centered,     │ │
+│ │ 520px max, backdrop-blur, dramatic shadow)  │ │
+│ └─────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────┘
+```
+
+**Homepage variant (two-column):**
+```css
+.HomepageV3_root {
+  display: grid;
+  grid-template-columns: 408px 1fr;
+  height: 100vh;
+  background: rgb(7, 7, 6);
 }
-
-/* Emphasis word in headline: italic */
-h1 em, h1 i {
-  font-style: italic;
-  font-weight: 400;
-}
-
-/* Body text */
-p {
-  font-size: 14px;
-  line-height: 24px;
-  color: var(--text-secondary);
-}
-
-/* Buttons / labels */
-.btn-label {
-  font-size: 11px;
-  color: var(--text-primary);
-}
+/* Mobile (<900px): stacks, left panel overlays transparent on grid */
 ```
 
-**Critical rules:**
-- Headlines are light weight (400), never bold
-- Use italic for emphasis words within headlines
-- Body text is 14px, comfortable line-height
-- Small UI elements (buttons, labels) at 11px
+### Signature Visual Effects
 
-### Layout
-
-```
-+------------------------------------------------------+
-|  logo (SVG, 88x20px, top-left, 24px padding)         |
-+-------------------+----------------------------------+
-|                   |                                  |
-|  HERO TEXT        |  WIDGET GRID                     |
-|  (408px)          |  (708px, overflow hidden)        |
-|                   |                                  |
-|  h1 headline      |  [card] [card] [card]            |
-|  p description     |  [card] [wide-card   ]           |
-|  p tagline        |  [tall ] [card] [card]           |
-|                   |  [card ] [card] [card]           |
-|  [btn] [btn]      |                                  |
-|                   |                                  |
-+-------------------+----------------------------------+
-|  [floating input bar, bottom-left, 200px wide]       |
-+------------------------------------------------------+
-```
-
-- **Two-column CSS Grid**: `grid-template-columns: 408px 1fr` (responsive: stack on mobile)
-- **Full viewport height**: `height: 100vh`
-- **Widget grid**: Masonry-style mixed card sizes with 10px gap, absolutely positioned via CSS transforms (virtual scrolling)
-- **Floating input**: Pinned to bottom of left panel (not viewport-fixed), with `rgb(30, 30, 28)` background and `box-shadow: rgba(255,255,255,0.1) 0 0 0 0.5px` ring
-
-### Card Sizes (Widget Grid)
-
-Cards use varied sizes for visual rhythm:
-```
-Small:   315 x 236px  (border-radius: 8px)
-Medium:  375 x 236px  (border-radius: 8px)
-Wide:    513 x 384px  (border-radius: 8px)
-Narrow:  177 x 384px  (border-radius: 8px)
-Feature: 345 x 259px  (border-radius: 8px)
-```
-
-Empty/placeholder cards use a **shimmer dashed border** effect:
+**1. Shimmer Dashed Border (The Variant Look)**
 ```css
 .card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: "";
+  position: absolute; inset: 0;
   border-radius: 8px;
   pointer-events: none;
-  /* Shimmer gradient that sweeps across the border */
   background-image: linear-gradient(135deg,
+    rgba(255,255,255,0.22) 0%,
     rgba(255,255,255,0.22) 48%,
     rgba(255,255,255,0.55) 50%,
-    rgba(255,255,255,0.22) 52%);
+    rgba(255,255,255,0.22) 52%,
+    rgba(255,255,255,0.22) 100%);
   background-size: 6700px 6700px;
-  /* Masked to a dashed rounded-rectangle via SVG */
+  /* SVG mask: stroke-dasharray='2 3' stroke-linecap='round' stroke-width='1' rx='8' ry='8' */
   -webkit-mask-image: url("data:image/svg+xml,...");
-  /* SVG uses: stroke-dasharray='2 3' stroke-linecap='round' stroke-width='1' rx='8' ry='8' */
-}
-```
-Active cards: contain interactive iframes or rich content, solid subtle border.
-
-### UI Components
-
-**Pill Buttons:**
-```css
-.btn-pill {
-  background: var(--bg-deep);
-  color: var(--text-primary);
-  border: 0.5px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 0 8px;
-  font-size: 11px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 ```
 
-**Floating Input Bar:**
+**2. Card Overlay Gradient (16-step fade)**
 ```css
-.input-bar {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  width: 200px;
-  background: var(--bg-surface);
-  border: 0.5px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.input-bar input,
-.input-bar [contenteditable] {
-  background: transparent;
-  border: none;
-  color: var(--text-input);
-  font-size: 14px;
-  flex: 1;
-  outline: none;
-}
-.input-bar .icon-btn {
-  color: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
+.card-overlay {
+  background: linear-gradient(to bottom,
+    black 0%, rgba(0,0,0,0.987) 8.1%, rgba(0,0,0,0.951) 15.5%,
+    rgba(0,0,0,0.896) 22.5%, rgba(0,0,0,0.825) 29%,
+    rgba(0,0,0,0.741) 35.3%, rgba(0,0,0,0.648) 41.2%,
+    rgba(0,0,0,0.55) 47.1%, rgba(0,0,0,0.45) 52.9%,
+    rgba(0,0,0,0.352) 58.8%, rgba(0,0,0,0.259) 64.7%,
+    rgba(0,0,0,0.175) 71%, rgba(0,0,0,0.104) 77.5%,
+    rgba(0,0,0,0.049) 84.5%, rgba(0,0,0,0.013) 91.9%,
+    transparent 100%);
 }
 ```
 
-**Widget Cards (with interactive content):**
+**3. Floating Composer Shadow (5-layer depth)**
 ```css
-.widget-card {
-  background: var(--bg-deep);
-  border-radius: 8px;
+.composer {
+  box-shadow:
+    rgba(255,255,255,0.1) 0 0 0 0.5px,   /* ring */
+    rgba(0,0,0,0.1) 0 5px 11px,           /* close shadow */
+    rgba(0,0,0,0.09) 0 20px 20px,         /* mid shadow */
+    rgba(0,0,0,0.05) 0 44px 26px,         /* far shadow */
+    rgba(0,0,0,0.01) 0 78px 31px,         /* ambient */
+    rgb(0,0,0) 0 122px 34px;              /* ground */
+  background: rgba(30, 30, 28, 0.75);
+  backdrop-filter: blur(25px);
+}
+```
+
+**4. Inset Ring Border (used EVERYWHERE)**
+```css
+box-shadow: rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px inset;
+/* This replaces border in most components */
+```
+
+### Animations (25 total)
+
+| Name | Duration | Use |
+|------|----------|-----|
+| shimmer | ∞ | Background position cycle |
+| gridShimmer | 1.5s ∞ | Loading card sweep |
+| emptyGridShimmerTranslate | 6s ∞ | Ambient grid sweep |
+| tooltipEnter | 0.15s | Scale 0.85→1 |
+| badgeSpawn | 0.2s | Blur+scale entrance |
+| spinReroll | 0.3s | Rotate -60deg |
+| billingModalEnter | 0.2s | Scale 0.96→1 |
+| shake | 0.4s | X-axis shake on error |
+| slideDown | 0.3s | Y -20px entrance |
+| fadeIn/fadeOut | 0.2s | Opacity transitions |
+
+### Easing Functions
+```css
+cubic-bezier(0.175, 0.885, 0.32, 1)  /* primary: layout shifts */
+cubic-bezier(0.19, 1, 0.22, 1)        /* secondary: containers */
+cubic-bezier(0.22, 1, 0.36, 1)        /* used in card widget flip/transitions */
+cubic-bezier(0.34, 1.56, 0.64, 1)     /* bouncy: card hover reset */
+cubic-bezier(0.76, 0, 0.24, 1)        /* card flip: smooth in-out */
+/* Durations: 0.1s hover → 0.16s states → 0.2s color → 0.4s layout → 6s ambient */
+```
+
+---
+
+## Part 2: The 10+ Design Aesthetics (Complete Widget CSS)
+
+Each widget is a self-contained micro-app. Below are the **actual extracted CSS variables and patterns** from each.
+
+---
+
+### Style 1: Dark Minimal / Dashboard
+**Source:** Bike Battery Widget
+**Fonts:** Inter 400–700
+**Palette:**
+```css
+:root {
+  --page-bg: #181b25;
+  --panel-bg: #181b25;
+  --panel-surface: #0e121b;
+  --panel-border: #2b303b;
+  --text: #ffffff;
+  --muted: #99a0ae;
+  --card-text: #f5f7fa;
+  --accent-a: #2b6cff;         /* blue primary */
+  --accent-b: #00c2ff;         /* cyan secondary */
+  --accent-border: #2a7bdc;
+  --bar-border: #9bd9ff;
+}
+```
+**Key patterns:**
+```css
+/* Deep inset shadow stack for depth */
+.widget__inner {
+  box-shadow:
+    inset 0px 4px 11.1px 0px #181b25,
+    inset 0px 16px 15.5px 0px rgba(113,119,132,0.34),
+    inset 0px 46px 24.4px 0px rgba(0,0,0,0.25);
+}
+
+/* Gradient battery bars */
+.bar--full {
+  background: linear-gradient(to bottom, var(--accent-a), var(--accent-b));
+  border-bottom-color: var(--bar-border);
+}
+
+/* Icon card with inset shadow */
+.card__icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: #525866;
+  box-shadow: inset 0px -6px 9.3px 0px rgba(0,0,0,0.25);
+}
+
+/* Large stat number */
+.percent { font-size: 56px; font-weight: 400; letter-spacing: -1.1px; }
+
+/* Charge button with radial gradient SVG bg */
+.charge {
+  height: 52px; border-radius: 20px;
+  border: 1px solid var(--accent-border);
+  box-shadow: 0px 1px 2px 0px #0a0d14;
+}
+
+/* Color transitions (blue↔green) via JavaScript lerp */
+/* Green variant: --accent-a: #06d689; --accent-b: #04dac1; */
+```
+
+**WebGL shader for energy pulse on battery bars** — uses SVG mask + Canvas for animated glow.
+
+---
+
+### Style 2: Retro CRT / Terminal
+**Source:** CRT/DOOM Widget
+**Font:** `"JetBrains Mono"` monospace
+**Palette:** Pure black (#000) + phosphor green/amber
+```css
+body {
+  background: #000;
+  font-family: "JetBrains Mono", monospace;
+  color: #e0e0e0;
+}
+.crt-container {
+  width: 640px; height: 480px;
+  background: #000;
   overflow: hidden;
-  position: relative;
 }
-.widget-card-empty {
-  border: 0.5px dashed var(--border-card-outline);
-  border-radius: 8px;
-  background: transparent;
+#boot-status {
+  font-size: 12px; line-height: 16px;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 ```
+**Key techniques:** Canvas-based CRT emulator with scanlines, barrel distortion, phosphor glow effects. Embeds js-dos for DOOM playback.
 
-### Interactive Widgets
+---
 
-Variant showcases 15+ interactive widget demos inside cards. Each is self-contained (iframe with `sandbox="allow-scripts allow-same-origin"`, lazy-loaded). Examples:
-
-- **Poetic Weather**: Photo background (Golden Gate Bridge) + temperature overlay + animated rain drops + city label
-- **Music Player**: Circular album art with glow + track info + playback controls + genre/BPM tag
-- **Bike Battery**: Vertical bar gauge + percentage + miles left + charge stats + action button
-- **Radio Tuner**: Frequency dial (83.5–105.9) + AM/FM toggle + Canvas waveform
-- **CRT Display**: Retro scanline monitor with "Loading DOOM..." text, Canvas-based
-- **Scribble Pad**: Drawing canvas with colorful strokes + clear button + tool toggles
-- **Stickers**: Collection of retro/funky sticker designs with typography badges
-- **Card Widget**: Credit/debit card with flip, freeze, add cash actions
-- **Robot Widget**: Animated LED-style robot face with emoji reaction buttons
-- **Messaging**: Notification list with tabs and message previews
-- **Text Editor**: Rich text with B/I/U/List toolbar
-- **Video Player**: Media playback widget
-- **Voice Recorder**: Audio recording interface
-
-Widget states: shimmer placeholder (loading) → loaded → hidden (offscreen, recycled).
-
-### Animation & Interaction Principles
-
-1. **Infinite virtual scroll**: Right panel uses transform-based positioning with ~60,000px scroll height; tiles are recycled as user scrolls (not traditional DOM flow)
-2. **Shimmer borders**: Card outlines use a 135deg gradient (`rgba(255,255,255,0.22)` → `0.55` → `0.22`) masked to a dashed SVG rect, creating a slow-moving light sweep effect
-3. **Micro-interactions**: Subtle hover states on buttons (opacity change, not color change)
-4. **Canvas animations**: Use HTML5 Canvas for CRT effects, radio waveforms, particle systems
-5. **No jarring transitions**: Everything eases smoothly (300-500ms, ease-out)
-6. **Ambient motion**: Continuous animations in widgets (rain drops, waveforms, gauges) add life without distraction
-7. **Sound design**: Interaction sounds for generate, explore, and error states (`.wav` files preloaded)
-
-### Responsive Behavior
-
+### Style 3: Atmospheric / Photographic
+**Source:** Poetic Weather Widget
+**Font:** `"Caveat"` cursive (handwritten) + Inter
+**Palette:** Dark (#111) with photo overlay
 ```css
-@media (max-width: 1024px) {
-  .layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-  }
-  .hero { padding: 24px; }
-  .widget-grid { height: 60vh; }
+body { background-color: #111; font-family: "Caveat", cursive; }
+
+/* Card with glass-like depth */
+.weather-card::after {
+  box-shadow:
+    inset 0 -4px 8px rgba(0, 0, 0, 0.25),
+    inset 0 4px 6px rgba(255, 255, 255, 0.55);
 }
-@media (max-width: 640px) {
-  h1 { font-size: 24px; line-height: 28px; }
-  .input-bar { width: calc(100% - 48px); }
+
+/* Layered overlays */
+.blur-overlay { backdrop-filter: blur(8px); }
+.gradient-overlay {
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+}
+
+/* Rain animation */
+.raindrop {
+  width: 2px; height: 40px;
+  background: white;
+  border-radius: 50% 50% 0 0;
+  filter: blur(4px);
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0%   { transform: translateY(-40px); opacity: 1; }
+  100% { transform: translateY(312px); opacity: 0; }
+}
+/* 50 raindrops, random left: 0-100%, scale: 0.5-1.0 */
+/* duration: 0.33-1.04s, random delay */
+
+/* Frosted location pill */
+.location-pill {
+  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.25));
+  padding: 0 8px 0 6px; border-radius: 12px; height: 24px;
+  font-size: 11.5px; font-family: "Inter";
+  backdrop-filter: blur(10px);
+}
+
+/* SVG hand-drawn text animation */
+.svg-container path {
+  stroke: white; stroke-width: 1.75;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: var(--length);
+  stroke-dashoffset: var(--length);
+  /* Animated via JS: sequential path reveal, duration: length/200 */
 }
 ```
 
-## Implementation Checklist
+---
 
-When building a variant.com-style website:
+### Style 4: Vibrant / Playful (Stickers)
+**Source:** Stickers Widget
+**Palette:** Black bg + colorful 3D stickers
+```css
+body {
+  background: #000;
+  perspective: 1200px;
+  perspective-origin: center center;
+}
 
-1. [ ] Set `background: #222222` on body — warm charcoal, not pure black
-2. [ ] Use `color: #f0ede5` for text — warm off-white, not pure white
-3. [ ] Headlines at 400 weight with italic emphasis words
-4. [ ] 0.5px borders with `rgba(255,255,255,0.1)` — barely visible
-5. [ ] Two-column grid: hero left, showcase right
-6. [ ] Mixed-size cards in the showcase grid (not uniform)
-7. [ ] Interactive widget content in cards (not just static images)
-8. [ ] Floating input bar fixed at bottom-left
-9. [ ] SVG logo top-left, minimal
-10. [ ] Full viewport height, no traditional scrolling on hero
+/* MacBook lid gradient */
+.macbook-lid {
+  background: linear-gradient(180deg, #333335 0%, #1e1e1f 100%);
+}
+.macbook-lid::before {
+  mix-blend-mode: overlay;
+  background: linear-gradient(230deg,
+    rgba(190,191,196,0.7) 17%, rgba(127,128,131,0.7) 81%);
+}
+.macbook-lid::after {
+  box-shadow: inset 0px -4.539px 22.695px 0px rgba(0,0,0,0.2);
+}
 
-## Quick Start Template
+/* 3D sticker with WebGL holographic sheen */
+.sticker {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+.sticker canvas {
+  filter: drop-shadow(0px var(--sh-y, 1px) var(--sh-blur, 2px) rgba(0,0,0,0.30));
+}
+/* Drag tilt: max 14.4deg, smoothing: 0.1 */
+/* Holographic sheen: SHEEN_STRENGTH=0.6, SHEEN_TILT_SHIFT=0.05 */
+/* Intro: 520ms appear, 260ms respawn */
+```
+
+---
+
+### Style 5: Scribble / Art Canvas
+**Source:** Scribble Pad Widget
+**Palette:** Dark (#111111) + colorful strokes on #333
+```css
+body { background-color: #111111; font-family: sans-serif; color: #fff; }
+.canvas-container {
+  width: 292px; height: 320px;
+  background-color: #333333;
+  overflow: hidden;
+}
+canvas { cursor: crosshair; touch-action: none; }
+
+/* Controls with press animation */
+.controls-wrapper {
+  transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+}
+.controls-wrapper.depressed {
+  transform: scale(0.95);
+  filter: blur(4px);
+  opacity: 0;
+}
+```
+
+---
+
+### Style 6: Retro Radio / Analog
+**Source:** Radio Widget
+**Font:** `"Gilroy"` Light 300
+**Palette:** Light gray background (#ececec) — BREAKS dark theme
+```css
+:root {
+  font-family: 'Gilroy', system-ui, sans-serif;
+  font-weight: 300;
+  background-color: #151619;
+}
+.radio-widget {
+  width: 500px; height: 500px;
+  background-color: #ececec;  /* LIGHT theme */
+  overflow: hidden;
+}
+
+/* Frequency display */
+.left {
+  font-size: 3.4375rem;
+  background-color: #8a8a8a;
+  color: #ffffff;
+}
+.right {
+  background-color: #ffffff;
+  text-transform: uppercase;
+}
+.right > p:first-of-type { color: rgba(0,0,0,0.3); }
+.right > p:last-of-type { color: rgba(0,0,0,0.5); }
+
+/* Circular dial with CSS-drawn tick marks */
+.dial-inner {
+  border-radius: 9999px;
+  will-change: transform;
+}
+.dial-inner-line {
+  --line-scale: 1;
+  transform-origin: bottom center;
+}
+.dial-inner-line::after {
+  width: 0.0625rem; height: 2.75rem;
+  background-color: #000; opacity: 0.3;
+  transform: scaleY(var(--line-scale));
+}
+
+/* Accent: gold/amber for active frequency */
+/* SVG dial: fill="#FFB30F" for active arc */
+
+/* AM/FM toggle */
+.modulation-selector > button {
+  color: #000; opacity: 0.2;
+  transform: scale(0.8);
+  transition: transform 0.3s ease-in-out;
+}
+.modulation-selector > button.active {
+  opacity: 1; transform: scale(1);
+}
+```
+
+---
+
+### Style 7: Robot / Tech Mascot
+**Source:** Robot Widget
+**Fonts:** `"PP Mondwest"` (display) + `"Inter"` (UI)
+**Palette:** White background — FULL LIGHT THEME
+```css
+.robot-widget {
+  width: 402px; height: 874px;
+  background-color: #ffffff;
+  border-radius: 0px;
+  padding: 0.3125rem;
+}
+.face {
+  background-color: #000000;
+  border-radius: 2.1875rem;
+}
+.text {
+  background-color: #e2f0f4;  /* light teal */
+  border-radius: 2.1875rem;
+}
+.text > .text-content > p {
+  font-family: 'PP Mondwest';
+  font-size: 4.6875rem;    /* 75px */
+  font-weight: 400;
+  letter-spacing: -0.0938rem;
+  color: #000000;
+}
+
+/* LED dot grid face (Canvas) */
+/* dotColor: '#FF9421' (orange), dotColorOff: 'rgba(255,148,33,0.14)' */
+/* Eye tracking: follows mouse, max 8px offset */
+/* Blink: 2-6s random delay, 0.15 progress speed */
+
+/* Language selector dropdown */
+.language-selector-content {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Emoji bottom bar */
+.bottom-bar {
+  background-color: #000000;
+  border-radius: 1.8125rem;
+}
+.bottom-bar > li {
+  background-color: #e2f0f4;
+  border-radius: 1.3125rem;
+  aspect-ratio: 1 / 1;
+}
+.bottom-bar > li.active { background-color: #ff9421; }
+```
+
+---
+
+### Style 8: Fintech / Card
+**Source:** Card Widget
+**Font:** `Inter` (variable) with feature settings "liga", "calt"
+**Palette:** Dark gradient
+```css
+.card-widget {
+  width: 24.25rem; height: 31.25rem;
+  background-image: linear-gradient(153deg, #0b0b0a 0% 40%, #242c2f);
+  border-radius: 8px;
+}
+
+/* Credit card with 3D perspective flip */
+.card-container {
+  perspective: 600px;
+  transform-style: preserve-3d;
+}
+.flip-wrapper {
+  transition: transform .6s cubic-bezier(.76, 0, .24, 1);
+  backface-visibility: hidden;
+}
+
+/* Squircle clip-path (superellipse) — modern CSS shape() */
+.squircle {
+  --squircle-radius: 1.0625rem;
+  --sm-tl: calc(var(--squircle-tl) * .375);
+  --d-tl: calc(var(--squircle-tl) * 1.3);
+}
+@supports (clip-path: shape(from 0 0, close)) {
+  .squircle {
+    clip-path: shape(
+      from 0px var(--d-tl),
+      curve to var(--d-tl) 0px with 0px var(--sm-tl) / var(--sm-tl) 0px,
+      hline to calc(100% - var(--d-tr)),
+      /* ... full superellipse path */
+      close
+    );
+  }
+}
+
+/* Card surface with multi-layer gradient */
+.card {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.08) 0%, transparent 40%,
+      transparent 60%, rgba(0,0,0,0.15) 100%),
+    linear-gradient(to bottom, #4a4a4a, #3d3d3d, #353535, #3a3a3a, #424242);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1),
+              inset 0 -1px 1px rgba(0,0,0,0.2);
+}
+
+/* Mouse-following glare */
+.card:before {
+  background: radial-gradient(
+    circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    rgba(255,255,255,0.15), transparent 70%);
+  filter: blur(20px);
+}
+
+/* Frost overlay for "freeze" state */
+/* Uses --frost-image: url("./assets/img_7d5d3328.webp") */
+
+/* Mechanical counter digit roll */
+.digit {
+  transform: translateY(calc(var(--digit) * -1.2em));
+}
+.digit.rolling {
+  animation: rollDigit .5s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+@keyframes rollDigit {
+  from { transform: translateY(calc(var(--from-digit) * -1.2em)); }
+  to   { transform: translateY(calc(var(--digit) * -1.2em)); }
+}
+
+/* Floating "+$100.00" animation (green #4ade80) */
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Dashed card border (SVG) */
+/* stroke-dasharray="1 4" stroke-opacity="0.5" */
+
+/* Action buttons */
+.card-action button {
+  width: 3.5rem; height: 3.5rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.4);
+  transition: background .4s cubic-bezier(.22, 1, .36, 1);
+}
+.card-action button:hover { background: rgba(255,255,255,0.2); }
+.card-action button.active { background: #fff; color: #0d0d0c; }
+```
+
+---
+
+### Style 9: Music / Audio
+**Source:** Music Player Widget
+**Palette:** Deep black + magenta/pink glow
+```css
+/* Circular album art with radiant magenta glow */
+/* Track: "AMOUR - AVA2", Tag: "CMINOR - 140 BPM" */
+/* Controls: prev/play/next with frosted backgrounds */
+/* Waveform: Canvas visualization */
+/* Built with Vite + React (minified), uses GSAP for animations */
+```
+
+---
+
+### Style 10: Editorial / Product
+**Source:** Movie Rating, Video Player
+```css
+/* High-quality product photography with warm lighting */
+/* Minimal text overlay on rich imagery */
+/* Rating systems, review interfaces */
+/* Attribution tags ("@vuelo") */
+```
+
+---
+
+## Part 3: Implementation Guide
+
+### Building the Shell (variant.com homepage style)
 
 ```html
 <!DOCTYPE html>
@@ -287,19 +670,20 @@ When building a variant.com-style website:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Product — Tagline</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg-body: #222222;
+      --bg-page: #070706;
       --bg-surface: #1e1e1c;
-      --bg-deep: #070706;
       --text-primary: #f0ede5;
       --text-secondary: rgba(240, 237, 229, 0.65);
-      --text-tertiary: rgba(240, 237, 229, 0.5);
-      --border-subtle: rgba(255, 255, 255, 0.1);
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --text-subtle: rgba(255, 255, 255, 0.4);
+      --border-ring: rgba(255, 255, 255, 0.1);
+      --hover-bg: rgba(255, 255, 255, 0.07);
     }
 
     body {
@@ -308,119 +692,109 @@ When building a variant.com-style website:
       color: var(--text-primary);
       height: 100vh;
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     .layout {
       display: grid;
       grid-template-columns: 408px 1fr;
       height: 100vh;
+      background: var(--bg-page);
     }
 
+    /* Hero Panel */
     .hero {
       padding: 24px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      gap: 16px;
     }
-
     .logo svg { width: 88px; height: 20px; fill: var(--text-primary); }
-
     h1 {
-      font-size: 32px;
-      font-weight: 400;
-      line-height: 36px;
-      letter-spacing: 0.32px;
-      margin-top: 24px;
+      font-size: 32px; font-weight: 400;
+      line-height: 36px; letter-spacing: 0.32px;
+      margin-top: 43px;
     }
     h1 em { font-style: italic; }
+    .desc { font-size: 14px; line-height: 24px; color: var(--text-secondary); }
+    .desc strong { color: var(--text-primary); font-weight: 500; }
+    .desc + .desc { margin-top: 16px; }
+    h1 + .desc { margin-top: 40px; }
 
-    .description {
-      font-size: 14px;
-      line-height: 24px;
-      color: var(--text-secondary);
-    }
-    .description strong {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-    }
+    .actions { display: flex; gap: 8px; margin-top: 25px; }
     .btn-pill {
-      background: var(--bg-deep);
+      background: var(--bg-page);
       color: var(--text-primary);
-      border: 0.5px solid var(--border-subtle);
+      border: 0.5px solid var(--border-ring);
       border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 11px;
+      padding: 0 8px; height: 26px;
+      font-size: 11px; font-family: inherit;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      display: inline-flex; align-items: center; gap: 4px;
     }
+    .btn-pill:hover { background: var(--hover-bg); }
 
-    .showcase {
-      overflow: hidden;
-      padding: 6px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      grid-auto-rows: 120px;
-      gap: 6px;
+    /* Widget Grid */
+    .showcase { overflow: hidden; position: relative; }
+    .grid-scroll {
+      overflow-y: auto; height: 100%;
+      padding: 0 6px 6px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.18) transparent;
     }
-
+    .grid { display: flex; flex-wrap: wrap; gap: 10px; }
     .card {
-      border: 0.5px dashed rgba(255, 255, 255, 0.08);
+      border-radius: 8px; overflow: hidden;
+      position: relative; flex-shrink: 0;
+    }
+    /* Shimmer dashed border */
+    .card.empty::after {
+      content: "";
+      position: absolute; inset: 0;
       border-radius: 8px;
-      overflow: hidden;
+      pointer-events: none;
+      background-image: linear-gradient(135deg,
+        rgba(255,255,255,0.22) 48%,
+        rgba(255,255,255,0.55) 50%,
+        rgba(255,255,255,0.22) 52%);
+      background-size: 6700px 6700px;
     }
     .card.active {
-      background: var(--bg-deep);
-      border-style: solid;
-      border-color: var(--border-subtle);
+      background: var(--bg-page);
+      box-shadow: var(--border-ring) 0 0 0 0.5px inset;
     }
-    .card.span-2 { grid-column: span 2; }
-    .card.tall { grid-row: span 2; }
 
+    /* Floating Input */
     .input-bar {
-      position: fixed;
-      bottom: 24px;
-      left: 24px;
-      width: 200px;
+      position: absolute;
+      bottom: 12px; left: 12px; right: 12px;
       background: var(--bg-surface);
-      border: 0.5px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      border-radius: 10px;
+      box-shadow: var(--border-ring) 0 0 0 0.5px;
+      padding: 8px;
+      min-height: 72px;
+      display: flex; flex-direction: column;
     }
     .input-bar input {
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 14px;
-      flex: 1;
-      outline: none;
-      font-family: inherit;
+      background: transparent; border: none;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px; font-family: inherit;
+      flex: 1; outline: none;
     }
-    .input-bar input::placeholder { color: var(--text-tertiary); }
-    .input-bar button {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      font-size: 16px;
-      padding: 0;
+    .input-bar input::placeholder { color: var(--text-subtle); }
+    .input-actions { display: flex; gap: 4px; margin-top: 4px; }
+    .icon-btn {
+      width: 24px; height: 24px;
+      background: none; border: none;
+      color: var(--text-muted);
+      border-radius: 6px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
     }
+    .icon-btn:hover { background: var(--hover-bg); }
 
-    @media (max-width: 1024px) {
-      .layout { grid-template-columns: 1fr; }
-      .showcase { max-height: 50vh; }
-      .input-bar { width: calc(100% - 48px); }
+    @media (max-width: 900px) {
+      .layout { display: block; position: relative; }
+      .showcase { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+      .hero { position: relative; z-index: 3; background: transparent; }
     }
   </style>
 </head>
@@ -428,45 +802,153 @@ When building a variant.com-style website:
   <div class="layout">
     <div class="hero">
       <div class="logo">
-        <!-- Replace with your SVG logo -->
-        <svg viewBox="0 0 88 20"><text x="0" y="16" font-size="16" fill="currentColor" font-family="Inter">your logo</text></svg>
+        <svg viewBox="0 0 88 20"><text x="0" y="16" font-size="16" fill="currentColor">your logo</text></svg>
       </div>
       <h1>Your headline here,<br><em>with emphasis.</em></h1>
-      <p class="description">Supporting text goes here. <strong>Brand name does this.</strong></p>
-      <p class="description">A compelling one-liner about the product experience.</p>
+      <p class="desc">Description text here. <strong>Brand name does this.</strong></p>
+      <p class="desc">A compelling tagline about the experience.</p>
       <div class="actions">
         <button class="btn-pill">Get started</button>
         <button class="btn-pill">Try it</button>
       </div>
+      <div style="flex:1"></div>
+      <div class="input-bar">
+        <input type="text" placeholder="See endless designs for...">
+        <div class="input-actions">
+          <button class="icon-btn">+</button>
+          <button class="icon-btn">@</button>
+          <div style="flex:1"></div>
+          <button class="icon-btn">↵</button>
+        </div>
+      </div>
     </div>
     <div class="showcase">
-      <div class="card active span-2"><!-- Widget content --></div>
-      <div class="card"></div>
-      <div class="card active tall"><!-- Widget content --></div>
-      <div class="card span-2"></div>
-      <div class="card"></div>
-      <div class="card active span-2"><!-- Widget content --></div>
-      <div class="card tall"></div>
-      <div class="card"></div>
-      <div class="card"></div>
+      <div class="grid-scroll">
+        <div class="grid">
+          <div class="card active" style="width:510px;height:380px"><!-- Widget --></div>
+          <div class="card empty" style="width:170px;height:380px"></div>
+          <div class="card empty" style="width:310px;height:235px"></div>
+          <div class="card active" style="width:370px;height:235px"><!-- Widget --></div>
+          <div class="card active" style="width:340px;height:255px"><!-- Widget --></div>
+          <div class="card empty" style="width:340px;height:255px"></div>
+          <div class="card empty" style="width:510px;height:380px"></div>
+          <div class="card active" style="width:170px;height:380px"><!-- Widget --></div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="input-bar">
-    <button>+</button>
-    <input type="text" placeholder="See endless designs for...">
-    <button>&#x21B5;</button>
   </div>
 </body>
 </html>
 ```
 
+### Building Individual Widget Aesthetics
+
+When the user asks for a specific style, apply the appropriate aesthetic from Part 2:
+
+**For "retro/CRT":** JetBrains Mono, pure #000 bg, Canvas scanlines, green phosphor glow, barrel distortion
+**For "glassmorphic/atmospheric":** Photo bg, backdrop-filter: blur(8px), Caveat cursive, rain divs, frosted pills
+**For "music/audio":** Circular album art, magenta glow gradients, waveform Canvas, uppercase labels
+**For "fintech/card":** Gradient bg (#0b0b0a→#242c2f), squircle clip-path, 3D perspective flip, mechanical counter
+**For "playful/stickers":** 3D perspective, WebGL stickers, holographic sheen, MacBook lid gradient
+**For "retro radio":** Gilroy Light, LIGHT bg (#ececec), circular SVG dial, gold accent (#FFB30F), AM/FM toggle
+**For "robot/mascot":** White bg, PP Mondwest 75px, LED dot grid Canvas, orange (#ff9421), teal card (#e2f0f4)
+**For "dark dashboard":** Inter, navy-dark (#181b25), blue-cyan gradient bars, WebGL energy shader, stat cards
+**For "scribble/art":** Crosshair cursor, dark canvas (#333), control blur animation on press
+**For "editorial":** Hero photography, minimal text, warm lighting, attribution tags
+
+---
+
+## Part 4: Advanced Patterns
+
+### Virtual Scroll (SquishyGrid)
+```css
+.grid-item {
+  position: absolute;
+  transform: matrix(1, 0, 0, 1, tx, ty);
+  /* ~32 visible items, total scroll ~60,000px */
+}
+```
+
+### Widget Iframe Pattern
+```html
+<iframe
+  src="/widgets/your-widget.html"
+  loading="lazy"
+  sandbox="allow-scripts allow-same-origin"
+  style="position:absolute;inset:0;border:none;border-radius:8px"
+></iframe>
+```
+
+### Sound Design
+- `Variant_Generate.wav` — generation start
+- `Variant_Explore_2.wav` — scroll/explore
+- `Variant_Failed_2.wav` — error state
+
+### Component Library
+
+**Dropdown Menu:**
+```css
+.dropdown {
+  background: rgba(68, 68, 68, 0.65);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
+  box-shadow: color(display-p3 0 0 0 / 0.03) 0 8px 20px;
+  padding: 4px;
+}
+.dropdown-item {
+  height: 28px; padding: 0 8px;
+  border-radius: 6px; font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+.dropdown-item:hover { color: rgba(255,255,255,0.85); }
+```
+
+**Toast Notification:**
+```css
+.toast {
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+}
+```
+
+**Custom Scrollbar:**
+```css
+scrollbar-width: thin;
+scrollbar-color: rgba(255,255,255,0.18) transparent;
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb {
+  background: content-box rgba(255,255,255,0.18);
+  border-radius: 999px;
+  border: 2px solid transparent;
+}
+```
+
+**Display-P3 Wide Gamut:**
+```css
+border: 0.5px solid color(display-p3 1 1 1 / 0.1);
+@supports (color: color(display-p3 1 1 1/1)) {
+  background: color(display-p3 0.1176 0.1176 0.1098 / 0.75);
+}
+```
+
+---
+
 ## References
 
-Load the detailed design reference when you need deeper detail:
-- [REFERENCE.md](references/REFERENCE.md) — Full extracted design tokens, layout measurements, and component specs
+Load detailed specs when needed:
+- [REFERENCE.md](references/REFERENCE.md) — Full DOM structure, computed styles, widget catalog
+- [WIDGETS.md](references/WIDGETS.md) — Complete widget source HTML/CSS/JS from Jina r.reader extraction
 
 ## Source
 
 - Design reference: https://variant.com/
-- Extraction method: webskills CLI (html_fallback) + chrome-devtools visual analysis
-- Skill methodology: browser-use skills pattern (capture once, reproduce deterministically)
+- Extraction methods:
+  - **Jina r.reader API** (X-Engine: browser) — full rendered HTML/CSS/JS from all widget URLs
+  - **chrome-devtools MCP** — DOM inspection, computed styles, screenshots at 15+ scroll positions
+  - **webskills CLI** — initial structure extraction
+- CSS rules extracted: 630+ rules, 151 component classes, 25 animations, 26 gradients, 28 shadows
+- Widget source code: 8 complete widgets with full CSS + JavaScript

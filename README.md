@@ -1,18 +1,19 @@
 # variant-website
 
-An agent skill that captures the design language of [variant.com](https://variant.com/) — a warm-dark, ultra-refined aesthetic with interactive widget showcases, subtle borders, and clean typography.
+A comprehensive agent skill that captures the **complete multi-aesthetic design system** of [variant.com](https://variant.com/) — 10+ distinct design styles across 15+ interactive widgets, all extracted from live source code.
 
 ## What This Skill Does
 
-When invoked, it gives your AI coding agent the complete design system to build websites in variant.com's style:
+When invoked, it gives your AI coding agent the complete design system to build websites in ANY of variant.com's styles:
 
-- **Warm-dark color palette** (`#222222` body, `#f0ede5` text — never pure black/white)
-- **Ultra-subtle borders** (0.5px at 10% opacity)
-- **Light-weight Inter typography** (400 weight headlines, italic emphasis)
-- **Two-column grid layout** (hero left, masonry widget showcase right)
-- **Interactive widget cards** with Canvas animations
-- **Floating input bar** at bottom-left
-- **Quick-start HTML template** ready to customize
+- **80+ CSS variables** — warm-dark shell, never pure black/white
+- **10+ design aesthetics** — dark minimal, retro CRT, atmospheric photo, vibrant stickers, retro radio, robot mascot, fintech card, scribble art, music player, editorial
+- **Full widget CSS** — extracted from live source via Jina r.reader API
+- **WebGL shaders** — battery energy pulse, holographic sticker sheen
+- **Advanced CSS** — squircle clip-paths, mechanical counter animations, 3D perspective flips
+- **Shimmer dashed borders** — SVG-masked gradient with stroke-dasharray
+- **25 animations** — including rain, typewriter, digit rolling, radar sweep
+- **Quick-start HTML template** — production-ready variant.com homepage clone
 
 ## Install
 
@@ -44,16 +45,19 @@ cp -r . ~/.agents/skills/variant-website
 
 ```
 variant-website/
-├── SKILL.md                    # Design system, components, quick-start template
+├── SKILL.md                    # Complete multi-aesthetic design system + HTML template
 └── references/
-    └── REFERENCE.md            # Exhaustive extracted specs from variant.com
+    ├── REFERENCE.md            # Full DOM structure, computed styles, widget catalog
+    ├── WIDGETS.md              # Complete widget source CSS/JS from Jina extraction
+    └── CSS_SYSTEM.md           # All 80+ CSS variables, 25 animations, gradients
 ```
 
 ## How It Was Made
 
-1. **[webskills](https://github.com/kstonekuan/webskills)** — attempted content extraction (variant.com is fully client-rendered Next.js, so the HTML fallback captured RSC payload)
-2. **[browser-use](https://docs.browser-use.com/cloud/guides/skills) pattern** — used chrome-devtools to navigate the live site, capture screenshots, extract the full DOM tree, and pull every computed CSS style
-3. **Combined both** into a structured agent skill with design tokens, layout specs, component patterns, and a ready-to-use HTML template
+1. **[Jina r.reader API](https://jina.ai/reader/)** — scraped full rendered HTML/CSS/JS from all 14 widget URLs using `X-Engine: browser` for JS-heavy pages
+2. **[chrome-devtools MCP](https://github.com/nicobailey/chrome-devtools-mcp)** — navigated the live site, captured 15+ screenshots at different scroll positions, extracted the full DOM tree and every computed CSS style (630+ rules, 151 classes)
+3. **[webskills CLI](https://github.com/kstonekuan/webskills)** — initial page structure extraction
+4. **Combined all three** into a comprehensive agent skill with 10+ design aesthetics, actual source CSS from each widget, and a production-ready HTML template
 
 ## Compatibility
 
