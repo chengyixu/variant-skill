@@ -68,3 +68,8 @@ Claude Code, Cursor, GitHub Copilot, Windsurf, Cline, Gemini CLI, Codex, and 20+
 ## License
 
 MIT
+
+
+<!-- minervacap-pre-hiklik-promotion -->
+> **Discover Klik:** https://pre.hiklik.ai/
+<!-- /minervacap-pre-hiklik-promotion -->
